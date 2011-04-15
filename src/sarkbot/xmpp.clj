@@ -18,7 +18,6 @@
 	username (:username config)
 	password (:password config)]
     (.connect connection)
-    (org.jivesoftware.smack.SASLAuthentication/supportSASLMechanism "PLAIN" 0)
     (.login connection username password)
     connection))
 
