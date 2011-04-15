@@ -13,9 +13,15 @@
     (org.jivesoftware.smack.XMPPConnection. connection-config)))
 
 (defn connect [config]
+  "Creates an open connection the service described in the cofiguration."
   (let [connection (make-connection config)
 	username (:username config)
 	password (:password config)]
     (.connect connection)
     (org.jivesoftware.smack.SASLAuthentication/supportSASLMechanism "PLAIN" 0)
-    (.login connection username password)))
+    (.login connection username password)
+    connection))
+
+(defn disconnect [connection]
+  "Disconnects from the service."
+  (.disconnect connection))
