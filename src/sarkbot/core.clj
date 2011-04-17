@@ -11,12 +11,14 @@
    :port (Integer/parseInt (prop/get-system-property "sarkbot.port"))
    :domain (prop/get-system-property "sarkbot.domain")})
 
-(def sarkbot (xmpp/make-connection *config*))
-
-(defn echo-handler [message]
+(defn echo-handler [connection message]
   "Echoes the body of a message back to its sender"
   (let [body (:body message)]
     (if (not (empty? body))
-      (xmpp/respond sarkbot message body))))
+      (xmpp/send-chat connection message body))))
 
-(xmpp/add-message-handler sarkbot echo-handler)
+(defn create-bot [& handlers]
+  "Creates a bot instance from the sarkbot.properties configuration
+   and adds each message handler to its connection."
+  (let [bot (xmpp/make-connection *config*)]
+    (map #(xmpp/add-message-handler bot %) handlers)))

@@ -9,20 +9,9 @@
   "Breaks apart a message into a map of its interesting parts."
   {:to (.getTo message)
    :from (org.jivesoftware.smack.util.StringUtils/parseBareAddress (.getFrom message))
-   :subject (.getSubject message)
    :body (.getBody message)})
 
-(defn make-response [orig-message-map response-body]
-  "Create a response to a message."
-  (let [to (:from orig-message-map)
-	from (:to orig-message-map)
-	message (org.jivesoftware.smack.packet.Message. to +chat-message-type+)]
-    (.setTo message to)
-    (.setFrom message from)
-    (.setBody message response-body)
-    message))
-
-(defn respond [connection orig-message-map response-body]
+(defn send-chat [connection orig-message-map response-body]
   "Responds to a message."
   (let [to (:from orig-message-map)
 	threadID (:thread orig-message-map)]
@@ -32,21 +21,21 @@
       (catch Exception exception
 	(println exception)))))
 
-(defn make-packet-listener [handler]
+(defn make-packet-listener [connection handler]
   "Make a packet listener using the handler as the execution body."
   (proxy [org.jivesoftware.smack.PacketListener]
       []
     (processPacket [packet]
       (println "Handling message: " (message-to-map packet))
       (try
-	(handler (message-to-map packet))
+	(handler connection (message-to-map packet))
 	(catch Exception exception
 	  (println exception))))))
 
 (defn add-message-handler [connection handler]
   "Adds a handler to the connection to process inbound messages."
   (try
-    (.addPacketListener connection (make-packet-listener handler) +chat-filter+)
+    (.addPacketListener connection (make-packet-listener connection handler) +chat-filter+)
     (catch Exception exception
       (println exception))))
 
