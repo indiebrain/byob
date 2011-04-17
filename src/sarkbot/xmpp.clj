@@ -8,13 +8,13 @@
 (defn message-to-map [message]
   "Breaks apart a message into a map of its interesting parts."
   {:to (.getTo message)
-   :from (.getFrom message)
+   :from (org.jivesoftware.smack.util.StringUtils/parseBareAddress (.getFrom message))
    :subject (.getSubject message)
    :body (.getBody message)})
 
 (defn make-response [orig-message-map response-body]
   "Create a response to a message."
-  (let [to ( org.jivesoftware.smack.util.StringUtils/parseBareAddress (:from orig-message-map))
+  (let [to (:from orig-message-map)
 	from (:to orig-message-map)
 	message (org.jivesoftware.smack.packet.Message. to +chat-message-type+)]
     (.setTo message to)
@@ -24,10 +24,11 @@
 
 (defn respond [connection orig-message-map response-body]
   "Responds to a message."
-  (let [response (make-response orig-message-map response-body)]
+  (let [to (:from orig-message-map)
+	threadID (:thread orig-message-map)]
     (try
-      (println "Responding to message from: " (.getTo response) " " response-body)
-      (.sendPacket connection response)
+      (println "Responding to message: " to " " response-body)
+      (.sendMessage (.createChat (.getChatManager connection) to nil) response-body)
       (catch Exception exception
 	(println exception)))))
 
