@@ -1,9 +1,9 @@
 (ns sarkbot.xmpp)
 
-(defonce +chat-message-type+ org.jivesoftware.smack.packet.Message$Type/chat)
+(def chat-message-type org.jivesoftware.smack.packet.Message$Type/chat)
 
-(defonce +chat-filter+ (org.jivesoftware.smack.filter.MessageTypeFilter.
-		    +chat-message-type+))
+(def chat-filter (org.jivesoftware.smack.filter.MessageTypeFilter.
+		    chat-message-type))
 
 (defn message-to-map [message]
   "Breaks apart a message into a map of its interesting parts."
@@ -35,7 +35,7 @@
 (defn add-message-handler [connection handler]
   "Adds a handler to the connection to process inbound messages."
   (try
-    (.addPacketListener connection (make-packet-listener connection handler) +chat-filter+)
+    (.addPacketListener connection (make-packet-listener connection handler) chat-filter)
     (catch Exception exception
       (println exception))))
 
