@@ -1,5 +1,6 @@
 (ns sarkbot.core
   (:require [sarkbot.xmpp :as xmpp])
+  (:require [sarkbot.handlers :as handlers])
   (:require [clojure.contrib.properties :as prop]))
 
 (prop/set-system-properties (prop/read-properties "resources/sarkbot.properties"))
@@ -10,12 +11,6 @@
    :host (prop/get-system-property "sarkbot.host")
    :port (Integer/parseInt (prop/get-system-property "sarkbot.port"))
    :domain (prop/get-system-property "sarkbot.domain")})
-
-(defn echo-handler [connection message]
-  "Echoes the body of a message back to its sender"
-  (let [body (:body message)]
-    (if (not (empty? body))
-      (xmpp/send-chat connection message body))))
 
 (defn create-bot [& handlers]
   "Creates a bot instance from the sarkbot.properties configuration
