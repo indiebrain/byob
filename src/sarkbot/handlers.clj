@@ -14,6 +14,6 @@
   (let [message-body (:body message)
 	[command & args] (string-util/split #"\s+" message-body)
 	command-function (cmd/commands (keyword command))]
-    (if (not (nil? command-function))
-      (xmpp/send-chat connection message (str (apply command-function args)))
-      (xmpp/send-chat connection message (str "I don't know how to interpret the command: " (keyword command))))))
+    (if (nil? command-function)
+      (xmpp/send-chat connection message (str "I don't know how to interpret the command: " (keyword command)))
+      (xmpp/send-chat connection message (str (apply command-function args))))))
