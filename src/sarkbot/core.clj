@@ -6,11 +6,11 @@
 (prop/set-system-properties (prop/read-properties "resources/xmpp_connection.properties"))
 
 (def config
-  {:username (prop/get-system-property "sarkbot.username")
-   :password (prop/get-system-property "sarkbot.password")
-   :host (prop/get-system-property "sarkbot.host")
-   :port (Integer/parseInt (prop/get-system-property "sarkbot.port"))
-   :domain (prop/get-system-property "sarkbot.domain")})
+  {:username (prop/get-system-property "xmpp.username")
+   :password (prop/get-system-property "xmpp.password")
+   :host (prop/get-system-property "xmpp.host")
+   :port (Integer/parseInt (prop/get-system-property "xmpp.port"))
+   :domain (prop/get-system-property "xmpp.domain")})
 
 (defn create-bot [& handlers]
   "Creates a bot instance from the sarkbot.properties configuration and adds each message handler to its connection."

@@ -1,0 +1,6 @@
+xmpp.host=XMPP_HOST     #ex. talk.google.com
+xmpp.domain=XMPP_DOMAIN # ex. gmail.com
+xmpp.port=XMPP_PORT     # ex. 5222
+
+xmpp.username=XMPP_USERNAME
+xmpp.password=XMPP_PASSWORD
