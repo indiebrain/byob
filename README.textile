@@ -1,0 +1,93 @@
+h1. Sarkbot - An XMPP Minion.
+
+p. This little guy was born of my desire to have a simple helper process which could be invoked on the fly to perform any number of different tasks. As such, this collection of functions makes it easy to create a process which logs into an XMPP account, I happen to use GTalk's service, and lays in wait for users to send it commands to perform tasks. Though most of the provided functions aim to satisfy this goal, several key characteristics of the bot are highly configurable. This allows the bots to be crated which can do any number other interesting things with its XMPP account; I just can't happen to think of any at the moment, I'll leave that up to you if you so desire.
+
+h2. Usage
+
+h4. Configuring the connection
+
+p. By default, the creation of a bot looks to load the XMPP connection configuration from a classpath resource at @resources/xmpp_connection.properties@:
+
+|Property|Description|
+|xmpp.host|Address of the XMPP service|
+|xmpp.port|Port number on which the XMPP service is running|
+|xmpp.username|Account ID of the bot's XMPP user|
+|xmpp.password|Password credential of the bot's XMPP user|
+
+p. (A sample configuration is provided with the bot's source in "resources/xmpp_connection.properties.sample":http://github.com/indiebrain/sarkbot/blob/master/resources/xmpp_connection.properties.sample)
+
+h2. Configuration 
+
+h4. Connection Configuration
+
+p. As stated in the previous section, The bot comes with a library of functions to connect to an XMPP account and listen for incoming commands. When creating a bot, using the @create-bot@ function, the connection described by the "config" variable is used in an attempt to hookup the bot to its XMPP account. By default, the config variable is constructed from the properties described in the @resources/xmpp_connection.properties@. When the XMPP connection is established, the @create-bot@ function then proceeds to add each of the message handlers to the bot.
+
+h4. Adding an inbound-message handler
+
+p. Each message sent to a bot is in-turn sent to be processed by each of the bot's message handlers for processing. A message handler is simply a function which accepts a the XMPP connection and a map representation of a received message. The message is then processed according to the body of the function. 
+
+p. For example, suppose that when a message is received it would be useful to log the body of the message to the standard output stream. To implement this we simply write the following function:
+
+<pre>
+<code>
+  (defn stdout-handler [connection message-map]
+    "Logs the body of a received message to the standard output stream."
+    (println (:body message-map)))
+</code>
+</pre>
+
+p. Now we can attach this handler to a bot in one of two ways. First, we can provide the handler to the bot construction method, @create-bot@, and the handler will be automatically wired into the resulting bot instance:
+
+<pre>
+<code>
+  ;; Note that create-bot accepts a variable length argument of handler functions, so add as many handlers as you like.
+  (create-bot stdout-handler)
+</code>
+</pre>
+
+p. or we can add the handler to an existing instance by invoking the @add-message-handler@ function from the @xmpp.clj@:
+
+<pre>
+<code>
+  ;; Add the stdout-handler function to the collection of handlers for the bot
+  (add-message-handler bot stdout-handler)
+</code>
+</pre>
+
+h4. Captured Message Parts
+
+p. The following information is available from the message-map sent into a handler:
+
+|:from|The sender of the message|
+|:to|The receiver of the message, presumably the bot's AccountID|
+|:body|The body of the XMPP message|
+
+h2. Command Framework 
+
+p. At its core, the bot's command framework is enabled by the @command-handler@ message handler. The command handler simply parses a received message for a known instruction. The _command_ associated with that instruction is then invoked with the arguments supplied in the message. A command is any plain old function. The @command-handler@ uses the @commands@ map from the @commands.clj@ to perform lookups of functions. Let's walk through an example of creating a new command. 
+
+p. Let's define a command which returns the date and time according to the server on which the bot is running. First we define a function to get us the interesting data:
+
+<pre>
+<code>
+  (defn now []
+    "Returns the current server date and time."
+    (java.util.Date.))
+</code>
+</pre>
+
+p. Now that the command function is written, we need to inform the command map of its existence; I plan to develop an auto-discovery method for command functions in the near future so this registration will not be necessary:
+
+<pre>
+<code>
+  ;; A map of commands known to the command-handler
+  (def commands {:now now})
+</code>
+</pre>
+
+p. Now when the @command-handler@ function receives a message body which contains the _now_ command, the now function will be looked up from the commands map and executed. The @command-handler@ performs one more interesting action, it sends the sender of the original message a chat message with the result of the command function invocation.
+
+h2. Interesting notes
+
+p. At its core, this project makes use of the Smack XMPP API library. A bot is simply an instance of an XMPPConnection object. There are many interesting things you can do with the XMPPConnection and therefore with a bot instance; even though this abstraction hides much of the XMPP details from end users. So get crazy with it. 
+
