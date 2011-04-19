@@ -9,5 +9,10 @@
   "Simply returns the content."
   (string-util/join " " content))
 
-(def commands {:echo echo
-	       :time now})
+;; A map of known commands.
+(def commands (dissoc (ns-publics 'sarkbot.commands)
+		      'commands))
+
+(defn help []
+  "Returns a list of the available commands."
+  (string-util/join "\n" (keys commands)))
