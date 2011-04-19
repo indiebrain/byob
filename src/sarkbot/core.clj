@@ -9,8 +9,7 @@
   {:username (prop/get-system-property "xmpp.username")
    :password (prop/get-system-property "xmpp.password")
    :host (prop/get-system-property "xmpp.host")
-   :port (Integer/parseInt (prop/get-system-property "xmpp.port"))
-   :domain (prop/get-system-property "xmpp.domain")})
+   :port (Integer/parseInt (prop/get-system-property "xmpp.port"))})
 
 (defn create-bot [& handlers]
   "Creates a bot instance from the sarkbot.properties configuration and adds each message handler to its connection."
