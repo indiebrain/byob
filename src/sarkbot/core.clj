@@ -3,7 +3,7 @@
   (:require [sarkbot.handlers :as handlers])
   (:require [clojure.contrib.properties :as prop]))
 
-(prop/set-system-properties (prop/read-properties "resources/sarkbot.properties"))
+(prop/set-system-properties (prop/read-properties "resources/xmpp_connection.properties"))
 
 (def config
   {:username (prop/get-system-property "sarkbot.username")
