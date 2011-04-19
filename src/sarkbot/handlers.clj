@@ -3,12 +3,6 @@
   (:require [sarkbot.commands :as cmd])
   (:require [clojure.contrib.string :as string-util]))
 
-(defn echo-handler [connection message]
-  "Echoes the body of a message back to its sender"
-  (let [body (:body message)]
-    (if (not (empty? body))
-      (xmpp/send-chat connection message body))))
-
 (defn command-handler [connection message]
   "Interrogates a message for an instruction from the sender and attempts to execute the instruction if it is recognized."
   (let [message-body (:body message)
