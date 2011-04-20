@@ -4,7 +4,16 @@ p. This little guy was born of my desire to have a simple helper process which c
 
 h2. Usage
 
-h4. Configuring the connection
+p. The following documentation will explain each of these steps in detail, but the general way to get up and running is:
+
+# Configure your XMPP connection parameters.
+# Load the @core@ namespace into a running JVM instance. I use @lein swank@ from the bot project's root and connect to the resulting JVM instance via slime. A future goal is to make this standalone.
+# Invoke the @create-bot@ function passing all of the inbound message handlers you want associated with your bot instance.
+# Sit back, sip tea, and command your bot like a boss.
+
+h2. Configuration 
+
+h4. Connection Configuration
 
 p. By default, the creation of a bot looks to load the XMPP connection configuration from a classpath resource at @resources/xmpp_connection.properties@:
 
@@ -14,13 +23,7 @@ p. By default, the creation of a bot looks to load the XMPP connection configura
 |xmpp.username|Account ID of the bot's XMPP user|
 |xmpp.password|Password credential of the bot's XMPP user|
 
-p. (A sample configuration is provided with the bot's source in "resources/xmpp_connection.properties.sample":http://github.com/indiebrain/sarkbot/blob/master/resources/xmpp_connection.properties.sample)
-
-h2. Configuration 
-
-h4. Connection Configuration
-
-p. As stated in the previous section, The bot comes with a library of functions to connect to an XMPP account and listen for incoming commands. When creating a bot, using the @create-bot@ function, the connection described by the "config" variable is used in an attempt to hookup the bot to its XMPP account. By default, the config variable is constructed from the properties described in the @resources/xmpp_connection.properties@. When the XMPP connection is established, the @create-bot@ function then proceeds to add each of the message handlers provided in the parameter list of the call to @create-bot@ to the bot instance.
+p. (A sample configuration is provided with the bot's source in "resources/xmpp_connection.properties.sample":http://github.com/indiebrain/sarkbot/blob/master/resources/xmpp_connection.properties.sample). The bot comes with a library of functions to connect to an XMPP account and listen for incoming commands. When creating a bot, using the @create-bot@ function, the connection described by the "config" variable is used in an attempt to hookup the bot to its XMPP account. By default, the config variable is constructed from the properties described in the @resources/xmpp_connection.properties@. When the XMPP connection is established, the @create-bot@ function then proceeds to add each of the message handlers provided in the parameter list of the call to @create-bot@ to the bot instance.
 
 h4. Adding an inbound-message handler
 
