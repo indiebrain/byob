@@ -9,6 +9,14 @@ p. The following documentation will explain each of these steps in detail, but t
 # Configure your XMPP connection parameters.
 # Load the @core@ namespace into a running JVM instance. I use @lein swank@ from the bot project's root and connect to the resulting JVM instance via slime. A future goal is to make this standalone.
 # Invoke the @create-bot@ function passing all of the inbound message handlers you want associated with your bot instance.
+  For example, to create a bot which processes incoming messages throught the command framework, I simply run the following in my REPL:
+
+<pre>
+<code>
+  (byob.core/create-bot byob.handlers/command-handler)
+</code>
+</pre>
+
 # Sit back, sip tea, and command your bot like a boss.
 
 h2. Configuration 
