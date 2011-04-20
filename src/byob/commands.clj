@@ -1,4 +1,4 @@
-(ns sarkbot.commands
+(ns byob.commands
   (:require [clojure.contrib.string :as string-util]))
 
 (defn now
@@ -17,5 +17,5 @@
 
 (def commands
   #^{:doc "A map of known commands."}
-  (dissoc (ns-publics 'sarkbot.commands)
+  (dissoc (ns-publics 'byob.commands)
 	  'commands))

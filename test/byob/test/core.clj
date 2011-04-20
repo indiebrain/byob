@@ -1,5 +1,5 @@
-(ns sarkbot.test.core
-  (:use [sarkbot.core])
+(ns byob.test.core
+  (:use [byob.core])
   (:use [clojure.test]))
 
 (deftest replace-me ;; FIXME: write

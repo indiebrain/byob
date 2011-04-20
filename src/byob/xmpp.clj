@@ -1,4 +1,4 @@
-(ns sarkbot.xmpp)
+(ns byob.xmpp)
 
 (def chat-message-type
   #^{:doc "A MessageType for XMPP chat messages"}
@@ -6,7 +6,7 @@
 
 (def chat-filter
   #^{:doc "A MessageTypeFilter for XMPP chat messages"}
-  (org.jivesoftware.smack.filter.MessageTypeFilter. qchat-message-type))
+  (org.jivesoftware.smack.filter.MessageTypeFilter. chat-message-type))
 
 (defn message-to-map
   "Breaks apart a message into a map of its interesting parts."

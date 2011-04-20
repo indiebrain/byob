@@ -1,6 +1,6 @@
-(ns sarkbot.core
-  (:require [sarkbot.xmpp :as xmpp])
-  (:require [sarkbot.handlers :as handlers])
+(ns byob.core
+  (:require [byob.xmpp :as xmpp])
+  (:require [byob.handlers :as handlers])
   (:require [clojure.contrib.properties :as prop]))
 
 (prop/set-system-properties (prop/read-properties "resources/xmpp_connection.properties"))

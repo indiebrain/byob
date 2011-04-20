@@ -1,6 +1,6 @@
-(ns sarkbot.handlers
-  (:require [sarkbot.xmpp :as xmpp])
-  (:require [sarkbot.commands :as cmd])
+(ns byob.handlers
+  (:require [byob.xmpp :as xmpp])
+  (:require [byob.commands :as cmd])
   (:require [clojure.contrib.string :as string-util]))
 
 (defn stdout-handler
