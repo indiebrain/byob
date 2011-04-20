@@ -33,9 +33,9 @@ p. For example, suppose that when a message is received it would be useful to lo
 
 <pre>
 <code>
-  (defn stdout-handler [connection message-map]
+  (defn stdout-handler 
     "Logs the body of a received message to the standard output stream."
-    (println (:body message-map)))
+    [connection message-map] (println (:body message-map)))
 </code>
 </pre>
 
@@ -74,9 +74,9 @@ p. Let's define a command which returns the date and time according to the serve
 
 <pre>
 <code>
-  (defn now []
-    "Returns the current server date and time."
-    (java.util.Date.))
+  (defn now 
+    "Returns the current server date and time." 
+    [] (java.util.Date.))
 </code>
 </pre>
 
@@ -86,5 +86,4 @@ p. When the @command-handler@ function receives a message body which contains th
 
 h2. Interesting notes
 
-p. At its core, this project makes use of the Smack XMPP API library. A bot is simply an instance of an XMPPConnection object. There are many interesting things you can do with the XMPPConnection and therefore with a bot instance; even though this abstraction hides much of the XMPP details from end users. So get crazy with it. 
-
+p. At its core, this project makes use of the Smack XMPP API library. A bot is simply an instance of an XMPPConnection object. There are many interesting things you can do with the XMPPConnection and therefore with a bot instance; even though this abstraction hides much of the XMPP details from end users. So get crazy with it.
