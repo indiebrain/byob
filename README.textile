@@ -6,7 +6,7 @@ h2. Usage
 
 p. The following documentation will explain each of these steps in detail, but the general way to get up and running is:
 
-# Configure your connection parameters.
+# Configure your XMPP connection parameters.
 # Load the @core@ namespace into a running JVM instance. I use @lein swank@ from the bot project's root and connect to the resulting JVM instance via slime. A future goal is to make this standalone.
 # Invoke the @create-bot@ function passing all of the inbound message handlers you want associated with your bot instance.
 # Sit back, sip tea, and command your bot like a boss.
