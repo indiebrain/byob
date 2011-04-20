@@ -1,18 +1,21 @@
 (ns sarkbot.commands
   (:require [clojure.contrib.string :as string-util]))
 
-(defn now []
+(defn now
   "Returns the current server date and time."
-  (java.util.Date.))
+  [] (java.util.Date.))
 
-(defn echo [& content]
+(defn echo
   "Simply returns the content."
-  (string-util/join " " content))
+  [& content] (string-util/join " " content))
 
-;; A map of known commands.
-(def commands (dissoc (ns-publics 'sarkbot.commands)
-		      'commands))
+(declare commands)
 
-(defn help []
+(defn help
   "Returns a list of the available commands."
-  (string-util/join "\n" (keys commands)))
+  [] (string-util/join "\n" (map #(str (key %) ": " (:doc (meta (val %)))) commands)))
+
+(def commands
+  #^{:doc "A map of known commands."}
+  (dissoc (ns-publics 'sarkbot.commands)
+	  'commands))
