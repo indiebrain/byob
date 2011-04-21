@@ -91,6 +91,6 @@ p. If added into the @commands@ namespace, this function will automatically be i
 
 p. When the @command-handler@ function receives a message body which contains the _now_ command, the now function will be looked up from the commands map and executed. The @command-handler@ performs one more interesting action, it sends the sender of the original message a chat message with the result of the command function invocation.
 
-h2. Interesting notes
+h2. Technical notes
 
-p. At its core, this project makes use of the Smack XMPP API library. A bot is simply an instance of an XMPPConnection object. There are many interesting things you can do with the XMPPConnection and therefore with a bot instance; even though this abstraction hides much of the XMPP details from end users. So get crazy with it.
+p. At its core, this project makes use of the Smack XMPP API library. A bot is simply an instance of an XMPPConnection object. There are many interesting things you can do with the XMPPConnection and therefore with a bot instance; even though this abstraction hides much of the XMPP detail from end users. So get crazy with it.
